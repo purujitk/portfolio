@@ -50,8 +50,13 @@ export default function Portfolio() {
             <a href="#projects">View Projects</a>
           </Button>
           <Button variant="outline" asChild>
-            <a href="mailto:your.email@example.com">
-              <Mail className="mr-2 h-4 w-4" /> Contact Me
+            <a href="mailto:purujitkantiya@gmail.com">
+              Contact Me
+            </a>
+          </Button>
+          <Button variant="outline" asChild>
+            <a href="/resume.pdf">
+              Resume
             </a>
           </Button>
         </div>
