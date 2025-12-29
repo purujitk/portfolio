@@ -12,7 +12,7 @@ export default function Home() {
       slug: "dimensional-change-monitor",
       description:
         "Low-cost monitoring system for museum artifacts",
-      tags: ["ESP32", "Sensors", "IoT"],
+      tags: ["Arduino", "Sensors", "IoT"],
     },
     {
       title: "Custom Batteries",
@@ -26,7 +26,7 @@ export default function Home() {
       slug: "sub-system",
       description:
         "Essential electronic sub systems for compeition drone",
-      tags: ["Electronics", "Research", "On Going"],
+      tags: ["Electronics", "Research", "Testing"],
     },
     {
       title: "Custom Suspension",
@@ -117,9 +117,6 @@ export default function Home() {
           <p className="text-slate-500">
             © {new Date().getFullYear()} Purujit Kantiya
           </p>
-          <a href="https://github.com/yourusername">
-            <Github />
-          </a>
         </div>
       </footer>
     </div>

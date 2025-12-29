@@ -30,9 +30,9 @@ const PROJECTS = {
   },
   "sub-system": {
     title: "Drone Electronic Sub Systems",
-    skills: ["Electronics", "Research", "KiCad"],
+    skills: ["Testing", "Research", "KiCad"],
     description:
-      "As manager of the system integration team on the Aerospace Design team, I am in charge of all electrical and software development of our competition aircraft that will fly at the AIAA compeition this summer.",
+      "As manager of the system integration team on the Aerospace Design team, I am in charge of all electrical and software development of our competition aircraft that will fly at the AIAA compeition this summer. This year the compeition requires us to create a banner towing bush plane that can also carry passengers (rubber ducks). On the technical side, I was in charge of researching all components that will go into our v1 plane including flight stabilization systems, batteries, motors, ESC's and communication devices. My role also required me to create and organize all sub system tests including full flight performance tests. As a mananger, part of my role also included member education. Right now I am teaching my members to how to create a basic PDB on KiCad that could be used for our drone to split and regulate power to all the electronics on the plane.",
     image: "images/plane_1.png",
   },
 };
