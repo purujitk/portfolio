@@ -36,6 +36,19 @@ export default function Home() {
       tags: ["Mechanical", "CAD"],
     },
   ];
+  // 1. Add this data array at the top with your other constants
+const achievements = [
+  {
+    title: "Dean's Honour List",
+    organization: "Faculty of Engineering",
+    date: "2024 - 2025",
+  },
+  {
+    title: "Competition Winner",
+    organization: "Queen's Engineering Competition",
+    date: "2024",
+  },
+];
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-950 to-slate-900 text-slate-100">
@@ -51,7 +64,7 @@ export default function Home() {
         </motion.h1>
 
         <p className="text-slate-300 max-w-2xl mb-8 text-lg">
-          Engineering student passionate about Energy, Computing,
+          Second year mechatronics engineering student passionate about Energy, Computing,
           and Robotics.
         </p>
 
@@ -65,7 +78,7 @@ export default function Home() {
             </a>
           </Button>
           <Button variant="outline" asChild>
-            <a href="/portfolio/Resume_Purujit_Kantiya_2025_2026.pdf"
+            <a href="/portfolio/Resume_Purujit_Kantiya_2026.pdf"
               download="resume_purujit_kantiya.pdf"
               className="resume-button"
               >
@@ -104,6 +117,30 @@ export default function Home() {
                 </Button>
               </CardContent>
             </Card>
+          ))}
+        </div>
+      </section>
+      {/* ACHIEVEMENTS */}
+      <section id="achievements" className="max-w-6xl mx-auto px-6 py-16">
+        <h2 className="text-3xl font-semibold mb-10">Achievements</h2>
+        
+        <div className="grid sm:grid-cols-2 gap-4">
+          {achievements.map((item, index) => (
+            <motion.div
+              key={index}
+              initial={{ opacity: 0, x: -10 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              transition={{ delay: index * 0.1 }}
+              className="flex items-center justify-between p-4 rounded-lg bg-slate-900/40 border border-slate-800 hover:border-indigo-500/50 transition-colors"
+            >
+              <div className="flex flex-col">
+                <h3 className="font-medium text-slate-100">{item.title}</h3>
+                <span className="text-sm text-indigo-400">{item.organization}</span>
+              </div>
+              <span className="text-xs font-mono text-slate-500 ml-4 whitespace-nowrap">
+                {item.date}
+              </span>
+            </motion.div>
           ))}
         </div>
       </section>
