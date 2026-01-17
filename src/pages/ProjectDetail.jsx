@@ -32,10 +32,17 @@ const PROJECTS = {
     title: "Drone Electronic Sub Systems",
     skills: ["Testing", "Research", "KiCad"],
     description:
-      "As manager of the system integration team on the Aerospace Design team, I am in charge of all electrical and software development of our competition aircraft that will fly at the AIAA compeition this summer. This year the compeition requires us to create a banner towing bush plane that can also carry passengers (rubber ducks). On the technical side, I was in charge of researching all components that will go into our v1 plane including flight stabilization systems, batteries, motors, ESC's and communication devices. My role also required me to create and organize all sub system tests including full flight performance tests. As a mananger, part of my role also included member education. Right now I am teaching my members to how to create a basic PDB on KiCad that could be used for our drone to split and regulate power to all the electronics on the plane.",
-    image: "images/plane_1.png",
+      "As manager of the system integration team on the Aerospace Design team, I am in charge of all electrical and software development of our competition aircraft that will fly at the AIAA compeition this summer. This year the compeition requires us to create a banner towing bush plane that can also carry passengers (rubber ducks). On the technical side, I was in charge of researching all components that will go into our v1 plane including flight stabilization systems, batteries, motors, ESC's and communication devices. My role also required me to create and organize all sub system tests including full flight performance tests. Our tests involve developing custom test stands, collecting data using arduino and pixhawk and analyzing that data with python scripts. As a manager, part of my role also includea member education. Right now I am teaching my members to how to create a basic PDB on KiCad that could be used for our drone to split and regulate power to all the electronics on the plane.",
+    image: ["images/plane_1.png","images/Test_Stand.jpeg","images/test_results 1.jpeg","images/Radio_mount.jpeg"],
   },
-};
+  "simulation": {
+    title: "Drone Swarm Simluation",
+    skills: ["ROS2", "C++", "Gazebo"],
+    description:
+      "The simulation team on the Queen's Aerospace Design Team has undertaken a project to develop a drone swarm simulation that can perform specific tasks for the ICUAS conference in Greece. As a member of this team I have gained exposure to simluation tools such as Gazebo and ROS2. In addition to that I have learned alot more aobut develpoing in a LInux based environment, version control using Git and Docker. So far I have developed ROS2 programs to scan buildings in a mock city environment for Aruco markers that indicate landing locations and land at those subsequent landing locations.",
+    image: "images/sim1.png",
+  },
+};  
 
 export default function ProjectDetail() {
   const { slug } = useParams();

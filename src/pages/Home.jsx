@@ -35,6 +35,13 @@ export default function Home() {
         "Custom suspension system desigined on SolidWorks",
       tags: ["Mechanical", "CAD"],
     },
+    {
+      title: "Drone Swarm Simulation",
+      slug: "simulation",
+      description:
+        "Drone Swarm simulation for ICUAS conference",
+      tags: ["Software", "Robotics"],
+    },
   ];
   // 1. Add this data array at the top with your other constants
 const achievements = [
