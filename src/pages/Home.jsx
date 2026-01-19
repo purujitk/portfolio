@@ -53,7 +53,7 @@ const achievements = [
   {
     title: "Competition Winner",
     organization: "Queen's Engineering Competition",
-    date: "2024",
+    date: "2025",
   },
 ];
 
