@@ -1,8 +1,7 @@
 import { useState } from "react";
 import { useParams, Link } from "react-router-dom";
 import { Button } from "../components/ui/button";
-import { ChevronLeft, ChevronRight, X, Maximize2, CheckCircle2 } from "lucide-react";
-
+import { ChevronLeft, ChevronRight, X, Maximize2, CheckCircle2, PlayCircle } from "lucide-react";
 const PROJECTS = {
   "dimensional-change-monitor": {
     title: "Dimensional Change Monitor",
@@ -33,7 +32,7 @@ const PROJECTS = {
     skills: ["Testing", "Research", "KiCad"],
     description:
       "As manager of the system integration team on the Aerospace Design team, I am in charge of all electrical and software development of our competition aircraft that will fly at the AIAA compeition this summer. This year the compeition requires us to create a banner towing bush plane that can also carry passengers (rubber ducks). On the technical side, I was in charge of researching all components that will go into our v1 plane including flight stabilization systems, batteries, motors, ESC's and communication devices. My role also required me to create and organize all sub system tests including full flight performance tests. Our tests involve developing custom test stands, collecting data using arduino and pixhawk and analyzing that data with python scripts. As a manager, part of my role also includea member education. Right now I am teaching my members to how to create a basic PDB on KiCad that could be used for our drone to split and regulate power to all the electronics on the plane.",
-    image: ["images/plane_1.png","images/Test_Stand.jpeg","images/test_results 1.jpeg","images/Radio_mount.jpeg"],
+    image: ["images/plane_1.png","images/Test_Stand.jpeg","images/test_results 1.jpeg","images/Radio_mount.jpeg", "images/Motor_test.MOV"],
   },
   "simulation": {
     title: "Drone Swarm Simluation",
@@ -42,45 +41,66 @@ const PROJECTS = {
       "The simulation team on the Queen's Aerospace Design Team has undertaken a project to develop a drone swarm simulation that can perform specific tasks for the ICUAS conference in Greece. As a member of this team I have gained exposure to simluation tools such as Gazebo and ROS2. In addition to that I have learned alot more aobut develpoing in a LInux based environment, version control using Git and Docker. So far I have developed ROS2 programs to scan buildings in a mock city environment for Aruco markers that indicate landing locations and land at those subsequent landing locations.",
     image: "images/sim1.png",
   },
-};  
+}; 
+
+const isVideo = (path) => {
+  return typeof path === "string" && path.match(/\.(mp4|webm|mov|ogg)$/i);
+};
 
 export default function ProjectDetail() {
   const { slug } = useParams();
   const project = PROJECTS[slug];
 
-  const images = Array.isArray(project?.image) ? project.image : [project?.image];
+  // Logic to handle both single strings and arrays of images/videos
+  const media = Array.isArray(project?.image) ? project.image : project?.image ? [project.image] : [];
+  
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isZoomed, setIsZoomed] = useState(false);
 
   if (!project) return <p className="p-10 text-white text-center">Project not found.</p>;
 
+  const currentMedia = media[currentIndex];
+  const isCurrentMediaVideo = isVideo(currentMedia);
+
   const nextImage = (e) => {
     e?.stopPropagation();
-    setCurrentIndex((prev) => (prev + 1) % images.length);
+    setCurrentIndex((prev) => (prev + 1) % media.length);
   };
 
   const prevImage = (e) => {
     e?.stopPropagation();
-    setCurrentIndex((prev) => (prev - 1 + images.length) % images.length);
+    setCurrentIndex((prev) => (prev - 1 + media.length) % media.length);
   };
 
   return (
     <div className="min-h-screen bg-slate-950 text-slate-100 px-6 py-16">
       
-      {/* --- LIGHTBOX MODAL --- */}
+      {/* --- LIGHTBOX MODAL (Updated for Video) --- */}
       {isZoomed && (
         <div 
           className="fixed inset-0 z-50 flex items-center justify-center bg-black/95 backdrop-blur-xl p-4 cursor-zoom-out"
           onClick={() => setIsZoomed(false)}
         >
-          <button className="absolute top-6 right-6 text-white/70 hover:text-white">
+          <button className="absolute top-6 right-6 text-white/70 hover:text-white z-50">
             <X size={40} />
           </button>
-          <img
-            src={images[currentIndex]}
-            alt="Full view"
-            className="max-w-full max-h-full object-contain rounded-lg"
-          />
+          
+          <div className="max-w-5xl max-h-full flex items-center justify-center" onClick={(e) => e.stopPropagation()}>
+            {isCurrentMediaVideo ? (
+              <video 
+                src={currentMedia} 
+                controls 
+                autoPlay 
+                className="max-w-full max-h-[90vh] rounded-lg shadow-2xl"
+              />
+            ) : (
+              <img
+                src={currentMedia}
+                alt="Full view"
+                className="max-w-full max-h-[90vh] object-contain rounded-lg shadow-2xl"
+              />
+            )}
+          </div>
         </div>
       )}
 
@@ -98,13 +118,12 @@ export default function ProjectDetail() {
               <div className="h-1 w-20 bg-blue-600 rounded-full"></div>
             </header>
 
-            {/* --- SUMMARY SECTION --- */}
+            {/* KEY SKILLS */}
             {project.skills && (
               <section className="bg-slate-900/50 border border-slate-800 rounded-2xl p-6">
                 <h2 className="text-sm font-semibold uppercase tracking-widest text-blue-400 mb-4">
                   Key Skills & Technologies
                 </h2>
-                {/* 2 columns on mobile, 3 columns on desktop */}
                 <ul className="grid grid-cols-2 md:grid-cols-3 gap-y-3 gap-x-4">
                   {project.skills.map((skill, index) => (
                     <li key={index} className="flex items-center gap-2 text-slate-300 text-sm">
@@ -116,20 +135,20 @@ export default function ProjectDetail() {
               </section>
             )}
 
-            {/* MAIN DESCRIPTION */}
+            {/* DESCRIPTION SECTIONS */}
             <div className="space-y-6 text-slate-400 text-lg leading-relaxed">
               <p>{project.description}</p>
-              {project.p2 && <p className="space-y-6 text-slate-400 text-lg leading-relaxed">{project.p2}</p>}
+              {project.p2 && <p>{project.p2}</p>}
               
               {project.hardware && (
-                <div className="pt-4">
+                <div className="pt-4 border-t border-slate-800">
                   <h3 className="text-white font-bold text-xl mb-3">Hardware</h3>
                   <p>{project.hardware}</p>
                 </div>
               )}
 
               {project.software && (
-                <div className="pt-4">
+                <div className="pt-4 border-t border-slate-800">
                   <h3 className="text-white font-bold text-xl mb-3">Software</h3>
                   <p>{project.software}</p>
                 </div>
@@ -137,41 +156,74 @@ export default function ProjectDetail() {
             </div>
           </div>
 
-          {/* RIGHT SIDE: GALLERY */}
+          {/* RIGHT SIDE: GALLERY (Updated for Video) */}
           <div className="lg:sticky lg:top-24 self-start">
             <div 
-              className="relative group aspect-[4/3] rounded-2xl overflow-hidden border border-slate-800 bg-slate-900 cursor-zoom-in"
-              onClick={() => setIsZoomed(true)}
+              className={`relative group aspect-[4/3] rounded-2xl overflow-hidden border border-slate-800 bg-slate-900 ${!isCurrentMediaVideo ? 'cursor-zoom-in' : ''}`}
+              onClick={() => !isCurrentMediaVideo && setIsZoomed(true)}
             >
-              <img
-                src={images[currentIndex]}
-                className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-                alt="Main project view"
-              />
-              <div className="absolute bottom-4 left-4 bg-black/60 backdrop-blur-md px-3 py-1 rounded-full text-xs text-white/80 opacity-0 group-hover:opacity-100 transition-opacity flex items-center gap-2">
-                <Maximize2 size={14} /> Click to enlarge
-              </div>
+              {isCurrentMediaVideo ? (
+                <video 
+                  src={currentMedia} 
+                  className="w-full h-full object-cover"
+                  controls
+                  muted
+                  playsInline
+                />
+              ) : (
+                <img
+                  src={currentMedia}
+                  className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                  alt="Main project view"
+                />
+              )}
 
-              {images.length > 1 && (
-                <div className="absolute inset-0 flex items-center justify-between px-4 opacity-0 group-hover:opacity-100 transition-opacity">
-                  <button onClick={prevImage} className="p-2 rounded-full bg-black/50 hover:bg-black/80 text-white"><ChevronLeft size={24} /></button>
-                  <button onClick={nextImage} className="p-2 rounded-full bg-black/50 hover:bg-black/80 text-white"><ChevronRight size={24} /></button>
+              {/* Only show "Click to enlarge" for images */}
+              {!isCurrentMediaVideo && (
+                <div className="absolute bottom-4 left-4 bg-black/60 backdrop-blur-md px-3 py-1 rounded-full text-xs text-white/80 opacity-0 group-hover:opacity-100 transition-opacity flex items-center gap-2">
+                  <Maximize2 size={14} /> Click to enlarge
+                </div>
+              )}
+
+              {/* Navigation Arrows */}
+              {media.length > 1 && (
+                <div className="absolute inset-0 flex items-center justify-between px-4 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none">
+                  <button 
+                    onClick={prevImage} 
+                    className="p-2 rounded-full bg-black/50 hover:bg-black/80 text-white pointer-events-auto transition-colors"
+                  >
+                    <ChevronLeft size={24} />
+                  </button>
+                  <button 
+                    onClick={nextImage} 
+                    className="p-2 rounded-full bg-black/50 hover:bg-black/80 text-white pointer-events-auto transition-colors"
+                  >
+                    <ChevronRight size={24} />
+                  </button>
                 </div>
               )}
             </div>
 
             {/* Thumbnails */}
-            {images.length > 1 && (
-              <div className="flex gap-4 mt-6 overflow-x-auto pb-2">
-                {images.map((img, index) => (
+            {media.length > 1 && (
+              <div className="flex gap-4 mt-6 overflow-x-auto pb-2 scrollbar-hide">
+                {media.map((item, index) => (
                   <button
                     key={index}
                     onClick={() => setCurrentIndex(index)}
-                    className={`w-20 h-20 flex-shrink-0 rounded-xl overflow-hidden border-2 transition-all ${
-                      currentIndex === index ? "border-blue-500 ring-4 ring-blue-500/10" : "border-transparent opacity-40 hover:opacity-100"
+                    className={`relative w-20 h-20 flex-shrink-0 rounded-xl overflow-hidden border-2 transition-all ${
+                      currentIndex === index 
+                        ? "border-blue-500 ring-4 ring-blue-500/10 opacity-100" 
+                        : "border-transparent opacity-40 hover:opacity-100"
                     }`}
                   >
-                    <img src={img} className="w-full h-full object-cover" alt="thumbnail" />
+                    {isVideo(item) ? (
+                      <div className="w-full h-full bg-slate-800 flex items-center justify-center">
+                        <PlayCircle className="text-blue-400" size={32} />
+                      </div>
+                    ) : (
+                      <img src={item} className="w-full h-full object-cover" alt={`thumbnail ${index}`} />
+                    )}
                   </button>
                 ))}
               </div>
