@@ -55,6 +55,11 @@ const achievements = [
     organization: "Queen's Engineering Competition",
     date: "2025",
   },
+  {
+    title: "Competition Winner",
+    organization: "Ontario Engineering Competition",
+    date: "2026",
+  },
 ];
 
   return (
@@ -85,7 +90,7 @@ const achievements = [
             </a>
           </Button>
           <Button variant="outline" asChild>
-            <a href="/portfolio/Resume_Purujit_Kantiya_2026.pdf"
+            <a href="/portfolio/Resume_Purujit_Kantiya_26.pdf"
               download="resume_purujit_kantiya.pdf"
               className="resume-button"
               >
