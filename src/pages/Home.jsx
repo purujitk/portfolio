@@ -42,28 +42,40 @@ export default function Home() {
         "Drone Swarm simulation for ICUAS conference",
       tags: ["Software", "Robotics"],
     },
+    {
+      title: "Autonomous Mobile Robot",
+      slug: "mobile-robot",
+      description:
+        "Autonomous mobile robot for coursework",
+      tags: ["Software", "Robotics"],
+    },
   ];
-  // 1. Add this data array at the top with your other constants
-const achievements = [
-  {
-    title: "Dean's Honour List",
-    organization: "Faculty of Engineering",
-    date: "2024 - 2025",
-  },
-  {
-    title: "Competition Winner",
-    organization: "Queen's Engineering Competition",
-    date: "2025",
-  },
-  {
-    title: "Competition Winner",
-    organization: "Ontario Engineering Competition",
-    date: "2026",
-  },
-];
+
+  const achievements = [
+    {
+      title: "Dean's Honour List",
+      organization: "Faculty of Engineering",
+      date: "2024 - 2025",
+    },
+    {
+      title: "1st Place",
+      organization: "Queen's Engineering Competition",
+      date: "2025",
+    },
+    {
+      title: "1st Place",
+      organization: "Ontario Engineering Competition",
+      date: "2026",
+    },
+    {
+      title: "3rd Place",
+      organization: "Canadian Engineering Competition",
+      date: "2026",
+    },
+  ];
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-950 to-slate-900 text-slate-100">
+    <div className="min-h-screen bg-gradient-to-br from-slate-100 to-white text-slate-900">
 
       {/* HERO */}
       <section className="max-w-6xl mx-auto px-6 py-20">
@@ -72,30 +84,36 @@ const achievements = [
           animate={{ opacity: 1, y: 0 }}
           className="text-4xl md:text-6xl font-bold mb-6"
         >
-          Hi, I’m <span className="text-indigo-400">Purujit Kantiya</span>
+          Hi, I’m <span className="text-blue-600">Purujit Kantiya</span>
         </motion.h1>
 
-        <p className="text-slate-300 max-w-2xl mb-8 text-lg">
-          Second year mechatronics engineering student passionate about Energy, Computing,
-          and Robotics.
+        <p className="text-slate-600 max-w-2xl mb-8 text-lg">
+          Second year mechatronics engineering student passionate Aerospace and Robotics.
         </p>
 
         <div className="flex gap-4">
           <Button variant="outline" asChild>
             <a href="mailto:purujitkantiya@gmail.com">Contact Me</a>
           </Button>
+
           <Button variant="outline" asChild>
-            <a href="https://linkedin.com/in/purujitk/" target="_blank" rel="noopener noreferrer">
-             LinkedIn
+            <a
+              href="https://linkedin.com/in/purujitk/"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              LinkedIn
             </a>
           </Button>
+
           <Button variant="outline" asChild>
-            <a href="/portfolio/Resume_Purujit_Kantiya_26.pdf"
+            <a
+              href="/portfolio/Resume_Purujit_Kantiya_26.pdf"
               download="resume_purujit_kantiya.pdf"
               className="resume-button"
-              >
+            >
               Resume
-              </a>
+            </a>
           </Button>
         </div>
       </section>
@@ -106,10 +124,14 @@ const achievements = [
 
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
           {projects.map((p) => (
-            <Card key={p.slug} className="bg-slate-900 border-slate-800">
+            <Card
+              key={p.slug}
+              className="bg-white border-slate-200 shadow-sm"
+            >
               <CardContent className="p-6 flex flex-col h-full">
                 <h3 className="text-xl font-semibold mb-2">{p.title}</h3>
-                <p className="text-slate-400 mb-4 flex-grow">
+
+                <p className="text-slate-600 mb-4 flex-grow">
                   {p.description}
                 </p>
 
@@ -117,7 +139,7 @@ const achievements = [
                   {p.tags.map((t) => (
                     <span
                       key={t}
-                      className="text-xs px-2 py-1 rounded bg-slate-800"
+                      className="text-xs px-2 py-1 rounded bg-slate-100 text-slate-700"
                     >
                       {t}
                     </span>
@@ -132,10 +154,11 @@ const achievements = [
           ))}
         </div>
       </section>
+
       {/* ACHIEVEMENTS */}
       <section id="achievements" className="max-w-6xl mx-auto px-6 py-16">
         <h2 className="text-3xl font-semibold mb-10">Achievements</h2>
-        
+
         <div className="grid sm:grid-cols-2 gap-4">
           {achievements.map((item, index) => (
             <motion.div
@@ -143,12 +166,18 @@ const achievements = [
               initial={{ opacity: 0, x: -10 }}
               whileInView={{ opacity: 1, x: 0 }}
               transition={{ delay: index * 0.1 }}
-              className="flex items-center justify-between p-4 rounded-lg bg-slate-900/40 border border-slate-800 hover:border-indigo-500/50 transition-colors"
+              className="flex items-center justify-between p-4 rounded-lg bg-white border border-slate-200 shadow-sm hover:border-blue-400/70 transition-colors"
             >
               <div className="flex flex-col">
-                <h3 className="font-medium text-slate-100">{item.title}</h3>
-                <span className="text-sm text-indigo-400">{item.organization}</span>
+                <h3 className="font-medium text-slate-900">
+                  {item.title}
+                </h3>
+
+                <span className="text-sm text-blue-600">
+                  {item.organization}
+                </span>
               </div>
+
               <span className="text-xs font-mono text-slate-500 ml-4 whitespace-nowrap">
                 {item.date}
               </span>
@@ -161,9 +190,9 @@ const achievements = [
       <ExperienceTimeline />
 
       {/* FOOTER */}
-      <footer className="border-t border-slate-800 py-8">
+      <footer className="border-t border-slate-200 py-8">
         <div className="max-w-6xl mx-auto px-6 flex justify-between">
-          <p className="text-slate-500">
+          <p className="text-slate-600">
             © {new Date().getFullYear()} Purujit Kantiya
           </p>
         </div>

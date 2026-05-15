@@ -1,47 +1,72 @@
 import { useState } from "react";
 import { useParams, Link } from "react-router-dom";
 import { Button } from "../components/ui/button";
-import { ChevronLeft, ChevronRight, X, Maximize2, CheckCircle2, PlayCircle } from "lucide-react";
+import {
+  ChevronLeft,
+  ChevronRight,
+  X,
+  Maximize2,
+  CheckCircle2,
+  PlayCircle,
+} from "lucide-react";
+
 const PROJECTS = {
   "dimensional-change-monitor": {
     title: "Dimensional Change Monitor",
-    skills: ["Arduino", "C++", "IoT"],  
+    skills: ["Arduino", "C++", "IoT"],
     description:
       "Ingenium Museum is a science and history musuem located in Ottawa, Canada. They house more than 150,000 artifacts and archival materials from the Canadian national collection. Their collection feauture thousands of delicate wooden artifacts that deform with fluctuting humidity and temprature conditions. In an effort to optimize their HVAC system and reduce their carbon foot print, Ingenium contracted us to develop a artifact monitoring system that can track deformation patterns within the wooden artifact. During a period of critical deformation the museum would activate the HVAC system to normalize the environmental conditions and return the artifact to a state of non critical deformation.",
     p2: "In our group I was in charge of all technical development of the prototype. We decided to develop a strain monitorning system that employed low cost strain guages to detect dimensional changes.",
-    hardware: "The monitoring system used several off the shelf electronics to fulfill all requirements. Strain was monitored using cheap strain gauges capable of detecting at the microstrain level. Changes detected from the strain gauges were captured by measuring the voltage across a wheatsone bridge with one strain gauge in a quarter wheatstone configuration. Due to the small changes in voltage a seperate ADC with 24 bit resolution was used to relay voltage signals to an ESP32. Voltages values that were captured were processed on the ESP and translated to a strain value. The calculated strain values was formatted into a CSV file and stored to a SD card.",
-    software: "Everything was programmed in C++ through the Arduino IDE. Select packages were imported to support the functionality of some of the devices and features. Through software, voltage readings were periodically collected, translated to strain values and than formatted into a CSV with time stamps. Daily email updates were sent to the client with a log of the deformation activity. Speacilized email alerts were also programmed so that the client can be warned of high strain readings. ",
-    image: ["images/strain_1.png","images/strain_2.png","images/strain_3.png"],
+    hardware:
+      "The monitoring system used several off the shelf electronics to fulfill all requirements. Strain was monitored using cheap strain gauges capable of detecting at the microstrain level. Changes detected from the strain gauges were captured by measuring the voltage across a wheatsone bridge with one strain gauge in a quarter wheatstone configuration. Due to the small changes in voltage a seperate ADC with 24 bit resolution was used to relay voltage signals to an ESP32. Voltages values that were captured were processed on the ESP and translated to a strain value. The calculated strain values was formatted into a CSV file and stored to a SD card.",
+    software:
+      "Everything was programmed in C++ through the Arduino IDE. Select packages were imported to support the functionality of some of the devices and features. Through software, voltage readings were periodically collected, translated to strain values and than formatted into a CSV with time stamps. Daily email updates were sent to the client with a log of the deformation activity. Speacilized email alerts were also programmed so that the client can be warned of high strain readings. ",
+    image: ["images/strain_1.png", "images/strain_2.png", "images/strain_3.png"],
   },
   "custom-batteries": {
     title: "Custom Batteries",
     skills: ["Welding", "Soldering", "Power Systems"],
     description:
       "As a power systems member on the Queen's Aerospace Design Team, I was responsible for the development of the custom battery packs for our competition aircraft. One of the drones in particular was a payload delivery quadcopter that demanded high current for the motors and high capacity to accomodate the flight time. To deliver this power, a power system with 3 12S 2P battery packs was designed. These custom packs were created by spot welding individual Li-Ion cells that were purchased online. Balance port connecters, and power delivery wires were soldered to each individual cell and than connected at the end using a balance port and XT90 connection respectively. These custom batteries were highly dangerous and posed severe risk if exposed to a heating element or if punctured. To mititgate the risk of combustion each pack was wrapped in foam and insulating plastic wrap. Before being deemed ready for use all battery packs were inspected, charged and tested.",
-    image: ["images/bat_1.png","images/bat_2.jpeg","images/bat_3.jpeg"],
+    image: ["images/bat_1.png", "images/bat_2.jpeg", "images/bat_3.jpeg"],
   },
   "suspension": {
     title: "Custom Suspension",
     skills: ["CAD", "Material Selection"],
     description:
       "As a member of the suspension sub team on the Hyperloop Design Team, I was in charge of creating a pod lowering/raising system. The proof of concept shown in the pictures uses a pneumatic piston to lower and raise the 200 Kg pod. All components were designned using solidworks, and a piston was found from McMaster-Carr. Due to finanicial constraints a working prototype was unable to be developed.",
-    image: ["images/suspension_1.png","images/suspension_2.png"],
+    image: ["images/suspension_1.png", "images/suspension_2.png"],
   },
   "sub-system": {
     title: "Drone Electronic Sub Systems",
     skills: ["Testing", "Research", "KiCad"],
     description:
       "As manager of the systems integration team on the Aerospace Design team, I am in charge of all electrical and software systems of our competition aircraft, which will fly at the AIAA compeition this summer. This year the compeition requires us to create a banner towing bush plane that can also carry passengers (rubber ducks). On the technical side, I was in charge of researching all components that will go into our v1 plane including flight stabilization systems, batteries, motors, ESC's and communication devices. My role also required me to create and organize all sub system tests including full flight performance tests. Our tests involve developing custom test stands, collecting data using arduino and pixhawk, and analyzing that data with python scripts. As a manager, part of my role also includes member education. Right now I am teaching my members to how to create a basic PDB on KiCad that could be used for our drone to regulate power to all the electronics on the plane.",
-    image: ["images/plane_1.png","images/Test_Stand.jpeg","images/test_results 1.jpeg","images/Radio_mount.jpeg", "images/FlightTest.png","images/image.png","images/WingTipLoadingTest.png","images/StaticThrustTest.png"],
+    image: [
+      "images/plane_1.png",
+      "images/Test_Stand.jpeg",
+      "images/test_results 1.jpeg",
+      "images/Radio_mount.jpeg",
+      "images/FlightTest.png",
+      "images/image.png",
+      "images/WingTipLoadingTest.png",
+      "images/StaticThrustTest.png",
+    ],
   },
   "simulation": {
     title: "Drone Swarm Simluation",
     skills: ["ROS2", "C++", "Gazebo"],
     description:
       "The simulation team on the Queen's Aerospace Design Team has undertaken a project to develop a drone swarm simulation that can perform specific task, for the ICUAS conference in Greece. As a member of this team I have gained exposure to simluation tools such as Gazebo and programming with ROS2. In addition to that, I have learned alot more aobut develpoing in a Linux based environment, version control using Git and Docker. So far I have developed ROS2 programs to scan buildings in a mock city environment for Aruco markers that indicate landing locations, and scripts to land the drones at those subsequent landing locations.",
-    image: ["images/sim1.png","images/CF.jpeg"]
+    image: ["images/sim1.png", "images/CF.jpeg"],
   },
-}; 
+  "mobile-robot": {
+    title: "Autonomous Mobile Robot",
+    skills: ["ROS2", "Python", "Nav2"],
+    description: "",
+    image: [],
+  },
+};
 
 const isVideo = (path) => {
   return typeof path === "string" && path.match(/\.(mp4|webm|mov|ogg)$/i);
@@ -51,13 +76,19 @@ export default function ProjectDetail() {
   const { slug } = useParams();
   const project = PROJECTS[slug];
 
-  // Logic to handle both single strings and arrays of images/videos
-  const media = Array.isArray(project?.image) ? project.image : project?.image ? [project.image] : [];
-  
+  const media = Array.isArray(project?.image)
+    ? project.image
+    : project?.image
+    ? [project.image]
+    : [];
+
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isZoomed, setIsZoomed] = useState(false);
 
-  if (!project) return <p className="p-10 text-white text-center">Project not found.</p>;
+  if (!project)
+    return (
+      <p className="p-10 text-slate-900 text-center">Project not found.</p>
+    );
 
   const currentMedia = media[currentIndex];
   const isCurrentMediaVideo = isVideo(currentMedia);
@@ -73,24 +104,26 @@ export default function ProjectDetail() {
   };
 
   return (
-    <div className="min-h-screen bg-slate-950 text-slate-100 px-6 py-16">
-      
-      {/* --- LIGHTBOX MODAL (Updated for Video) --- */}
+    <div className="min-h-screen bg-gradient-to-br from-slate-100 to-white text-slate-900 px-6 py-16">
+      {/* LIGHTBOX */}
       {isZoomed && (
-        <div 
-          className="fixed inset-0 z-50 flex items-center justify-center bg-black/95 backdrop-blur-xl p-4 cursor-zoom-out"
+        <div
+          className="fixed inset-0 z-50 flex items-center justify-center bg-black/90 backdrop-blur-xl p-4 cursor-zoom-out"
           onClick={() => setIsZoomed(false)}
         >
           <button className="absolute top-6 right-6 text-white/70 hover:text-white z-50">
             <X size={40} />
           </button>
-          
-          <div className="max-w-5xl max-h-full flex items-center justify-center" onClick={(e) => e.stopPropagation()}>
+
+          <div
+            className="max-w-5xl max-h-full flex items-center justify-center"
+            onClick={(e) => e.stopPropagation()}
+          >
             {isCurrentMediaVideo ? (
-              <video 
-                src={currentMedia} 
-                controls 
-                autoPlay 
+              <video
+                src={currentMedia}
+                controls
+                autoPlay
                 className="max-w-full max-h-[90vh] rounded-lg shadow-2xl"
               />
             ) : (
@@ -105,29 +138,38 @@ export default function ProjectDetail() {
       )}
 
       <div className="max-w-7xl mx-auto">
-        <Button asChild variant="ghost" className="mb-12 hover:bg-slate-800 text-slate-400">
+        <Button
+          asChild
+          variant="ghost"
+          className="mb-12 text-white"
+        >
           <Link to="/">← Back to Projects</Link>
         </Button>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16">
-          
-          {/* LEFT SIDE: TEXT & SUMMARY */}
+          {/* LEFT */}
           <div className="space-y-10">
             <header>
-              <h1 className="text-5xl font-bold tracking-tight mb-4">{project.title}</h1>
+              <h1 className="text-5xl font-bold tracking-tight mb-4 text-slate-900">
+                {project.title}
+              </h1>
               <div className="h-1 w-20 bg-blue-600 rounded-full"></div>
             </header>
 
-            {/* KEY SKILLS */}
+            {/* SKILLS */}
             {project.skills && (
-              <section className="bg-slate-900/50 border border-slate-800 rounded-2xl p-6">
-                <h2 className="text-sm font-semibold uppercase tracking-widest text-blue-400 mb-4">
+              <section className="bg-white border border-slate-200 rounded-2xl p-6 shadow-sm">
+                <h2 className="text-sm font-semibold uppercase tracking-widest text-blue-600 mb-4">
                   Key Skills & Technologies
                 </h2>
+
                 <ul className="grid grid-cols-2 md:grid-cols-3 gap-y-3 gap-x-4">
                   {project.skills.map((skill, index) => (
-                    <li key={index} className="flex items-center gap-2 text-slate-300 text-sm">
-                      <CheckCircle2 size={14} className="text-blue-500 flex-shrink-0" />
+                    <li
+                      key={index}
+                      className="flex items-center gap-2 text-slate-600 text-sm"
+                    >
+                      <CheckCircle2 size={14} className="text-blue-500" />
                       {skill}
                     </li>
                   ))}
@@ -135,36 +177,42 @@ export default function ProjectDetail() {
               </section>
             )}
 
-            {/* DESCRIPTION SECTIONS */}
-            <div className="space-y-6 text-slate-400 text-lg leading-relaxed">
+            {/* DESCRIPTION */}
+            <div className="space-y-6 text-slate-600 text-lg leading-relaxed">
               <p>{project.description}</p>
               {project.p2 && <p>{project.p2}</p>}
-              
+
               {project.hardware && (
-                <div className="pt-4 border-t border-slate-800">
-                  <h3 className="text-white font-bold text-xl mb-3">Hardware</h3>
+                <div className="pt-4 border-t border-slate-200">
+                  <h3 className="text-slate-900 font-bold text-xl mb-3">
+                    Hardware
+                  </h3>
                   <p>{project.hardware}</p>
                 </div>
               )}
 
               {project.software && (
-                <div className="pt-4 border-t border-slate-800">
-                  <h3 className="text-white font-bold text-xl mb-3">Software</h3>
+                <div className="pt-4 border-t border-slate-200">
+                  <h3 className="text-slate-900 font-bold text-xl mb-3">
+                    Software
+                  </h3>
                   <p>{project.software}</p>
                 </div>
               )}
             </div>
           </div>
 
-          {/* RIGHT SIDE: GALLERY (Updated for Video) */}
+          {/* RIGHT */}
           <div className="lg:sticky lg:top-24 self-start">
-            <div 
-              className={`relative group aspect-[4/3] rounded-2xl overflow-hidden border border-slate-800 bg-slate-900 ${!isCurrentMediaVideo ? 'cursor-zoom-in' : ''}`}
+            <div
+              className={`relative group aspect-[4/3] rounded-2xl overflow-hidden border border-slate-200 bg-white ${
+                !isCurrentMediaVideo ? "cursor-zoom-in" : ""
+              }`}
               onClick={() => !isCurrentMediaVideo && setIsZoomed(true)}
             >
               {isCurrentMediaVideo ? (
-                <video 
-                  src={currentMedia} 
+                <video
+                  src={currentMedia}
                   className="w-full h-full object-cover"
                   controls
                   muted
@@ -178,25 +226,24 @@ export default function ProjectDetail() {
                 />
               )}
 
-              {/* Only show "Click to enlarge" for images */}
               {!isCurrentMediaVideo && (
-                <div className="absolute bottom-4 left-4 bg-black/60 backdrop-blur-md px-3 py-1 rounded-full text-xs text-white/80 opacity-0 group-hover:opacity-100 transition-opacity flex items-center gap-2">
+                <div className="absolute bottom-4 left-4 bg-black/60 backdrop-blur-md px-3 py-1 rounded-full text-xs text-white opacity-0 group-hover:opacity-100 transition-opacity flex items-center gap-2">
                   <Maximize2 size={14} /> Click to enlarge
                 </div>
               )}
 
-              {/* Navigation Arrows */}
               {media.length > 1 && (
                 <div className="absolute inset-0 flex items-center justify-between px-4 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none">
-                  <button 
-                    onClick={prevImage} 
-                    className="p-2 rounded-full bg-black/50 hover:bg-black/80 text-white pointer-events-auto transition-colors"
+                  <button
+                    onClick={prevImage}
+                    className="p-2 rounded-full bg-black/40 hover:bg-black/70 text-white pointer-events-auto"
                   >
                     <ChevronLeft size={24} />
                   </button>
-                  <button 
-                    onClick={nextImage} 
-                    className="p-2 rounded-full bg-black/50 hover:bg-black/80 text-white pointer-events-auto transition-colors"
+
+                  <button
+                    onClick={nextImage}
+                    className="p-2 rounded-full bg-black/40 hover:bg-black/70 text-white pointer-events-auto"
                   >
                     <ChevronRight size={24} />
                   </button>
@@ -204,32 +251,35 @@ export default function ProjectDetail() {
               )}
             </div>
 
-            {/* Thumbnails */}
+            {/* THUMBNAILS */}
             {media.length > 1 && (
-              <div className="flex gap-4 mt-6 overflow-x-auto pb-2 scrollbar-hide">
+              <div className="flex gap-4 mt-6 overflow-x-auto pb-2">
                 {media.map((item, index) => (
                   <button
                     key={index}
                     onClick={() => setCurrentIndex(index)}
                     className={`relative w-20 h-20 flex-shrink-0 rounded-xl overflow-hidden border-2 transition-all ${
-                      currentIndex === index 
-                        ? "border-blue-500 ring-4 ring-blue-500/10 opacity-100" 
-                        : "border-transparent opacity-40 hover:opacity-100"
+                      currentIndex === index
+                        ? "border-blue-500 ring-4 ring-blue-500/10"
+                        : "border-slate-200 opacity-60 hover:opacity-100"
                     }`}
                   >
                     {isVideo(item) ? (
-                      <div className="w-full h-full bg-slate-800 flex items-center justify-center">
-                        <PlayCircle className="text-blue-400" size={32} />
+                      <div className="w-full h-full bg-slate-100 flex items-center justify-center">
+                        <PlayCircle className="text-blue-500" size={32} />
                       </div>
                     ) : (
-                      <img src={item} className="w-full h-full object-cover" alt={`thumbnail ${index}`} />
+                      <img
+                        src={item}
+                        className="w-full h-full object-cover"
+                        alt={`thumbnail ${index}`}
+                      />
                     )}
                   </button>
                 ))}
               </div>
             )}
           </div>
-
         </div>
       </div>
     </div>
