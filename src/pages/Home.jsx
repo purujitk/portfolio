@@ -88,7 +88,7 @@ export default function Home() {
         </motion.h1>
 
         <p className="text-slate-600 max-w-2xl mb-8 text-lg">
-          Second year mechatronics engineering student passionate Aerospace and Robotics.
+          Third year mechatronics engineering student passionate Aerospace and Robotics.
         </p>
 
         <div className="flex gap-4">
