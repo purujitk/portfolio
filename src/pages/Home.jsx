@@ -108,7 +108,7 @@ export default function Home() {
 
           <Button variant="outline" asChild>
             <a
-              href="/portfolio/Resume_Purujit_Kantiya_26.pdf"
+              href="Resume_Purujit_Kantiya_26.pdf"
               download="resume_purujit_kantiya.pdf"
               className="resume-button"
             >

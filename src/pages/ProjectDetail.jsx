@@ -63,8 +63,8 @@ const PROJECTS = {
   "mobile-robot": {
     title: "Autonomous Mobile Robot",
     skills: ["ROS2", "Python", "Nav2"],
-    description: "",
-    image: [],
+    description: "This project involved developing an autonomous mobile rover using ROS2 on a Raspberry Pi, integrating sensing, control, mapping, and navigation into a unified autonomy stack. The system was built around three core ROS2 packages: a bring-up package for system orchestration, a robot description package (URDF/TF2) for frame management, and a LiDAR driver (rplidar_ros) for perception. Low-level control used closed-loop PI motor control via an Arduino interface, with encoder feedback used to estimate odometry and maintain stable motion. Mapping and localization were achieved using a 2D LiDAR combined with wheel encoder data in the SLAM Toolbox, producing real-time occupancy grid maps of the environment. These maps were used as the basis for autonomous operation. Navigation was implemented using the ROS2 Nav2 stack, including global path planning (NavFn), local obstacle avoidance (regulated pure pursuit), and behavior tree-based mission control. The system successfully supported full autonomous navigation to user-defined goals in a mapped environment. A custom bring-up system coordinated all components and ensured proper launch sequencing between LiDAR, SLAM, and Nav2 for reliable operation. Overall, the project successfully demonstrated a complete SLAM-based autonomous navigation system, culminating in working Nav2 autonomy on the rover.",
+    image: ["images/203.jpeg"],
   },
 };
 
