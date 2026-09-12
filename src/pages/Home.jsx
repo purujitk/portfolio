@@ -17,14 +17,14 @@ export default function Home() {
     {
       title: "Drone Swarm Simulation",
       slug: "simulation",
-      description: "In collaboration with a team of students I developed a drone swarm simulation for the ICUAS student UAV competition. My role included creating ROS2 scripts to perform specific activties in the environment including building scanning and landing on platforms. Our final solution made use of OSF flocking algorithms and earned us spot to compete at the conference in person in Greece.",
+      description: "In collaboration with a team of students I developed a drone swarm simulation for the ICUAS student UAV competition. My role included creating ROS2 scripts to perform specific activties in the environment including building scans and platform landing. Our final solution made use of OSF flocking algorithms and earned us a spot to compete at the conference in person in Greece.",
       image: `${basePath}images/ICUAS.png`,
       skills: ["Software"]
     },
     {
       title: "Autonomous Mobile Robot",
       slug: "mobile-robot",
-      description: "Developed Autonomy and control software for a rover for MREN 203 coursework. The rover was developed for a simulated mars mission, the task, to pickup soil samples from the martian surface. The solution I developed is a semi-autonomous rover that used NAV2 and SLAM to plan a path to a specified path using a pre surveyed map. The onboard sensors included a RPLidar, wheel encoders and an IMU. Autonomy and low level control were bridged using ROS2 running on a Raspberry PI.",
+      description: "Developed Autonomy and control software for a rover for MREN 203 coursework. The rover was developed for a simulated mars mission, the task, to pickup soil samples from the martian surface. The solution I developed is a semi-autonomous rover that used NAV2 and SLAM to plan a path to a specified point using a pre constructed map. The onboard sensors included a RPLidar, wheel encoders and an IMU. Autonomy and low level control were bridged using ROS2 running on a Raspberry PI.",
       image: `${basePath}images/203.jpeg`,
       skills: ["Electronics","Software"],
     },
@@ -45,7 +45,7 @@ export default function Home() {
     {
       title: "Dimensional Change Monitor",
       slug: "dimensional-change-monitor",
-      description: "Low-cost strain monitoring system developed for the Ingenium museum in Ottawa in an effor to optimize HVAC usage. Hardware used included 24 bit ADC, strain guages in wheatstone bridge conifguration and an ESP32. Everything was programmed in C++ and automated alerts were sent to museum coordinaters for extreme strain values. ",
+      description: "Low-cost strain monitoring system developed for the Ingenium museum in Ottawa in an effort to optimize HVAC usage. Hardware used included a 24 bit ADC, strain guages in wheatstone bridge conifguration and an ESP32. Everything was programmed in C++ and automated alerts were sent to museum coordinaters for extreme strain values. ",
       image: `${basePath}images/strain_2.png`,
       skills: ["Electronics", "Software"],
     },
@@ -130,9 +130,6 @@ export default function Home() {
               <p className="muted-label mb-2">Selected Work</p>
               <h2 className="text-3xl font-semibold tracking-[-0.05em] text-white md:text-4xl">Projects</h2>
             </div>
-            <a href="#experience" className="hidden items-center gap-2 text-sm text-zinc-400 transition hover:text-white md:inline-flex">
-              View experience <ArrowRight size={16} />
-            </a>
           </div>
 
           <div className="grid gap-5 md:grid-cols-2 xl:grid-cols-3">
