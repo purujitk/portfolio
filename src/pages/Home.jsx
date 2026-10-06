@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { motion } from "framer-motion";
 import { ArrowRight, Github, Mail, Linkedin } from "lucide-react";
 import { Card, CardContent } from "../components/ui/card";
@@ -6,6 +7,17 @@ import ExperienceTimeline from "../sections/ExperienceTimeline";
 
 export default function Home() {
   const basePath = import.meta.env.BASE_URL;
+  const [activeImageIndex, setActiveImageIndex] = useState(() =>
+    Object.fromEntries(
+      [
+        "simulation",
+        "mobile-robot",
+        "sub-system",
+        "custom-batteries",
+        "dimensional-change-monitor",
+      ].map((slug) => [slug, 0])
+    )
+  );
 
   const scrollToSection = (id) => {
     const element = document.getElementById(id);
@@ -13,40 +25,75 @@ export default function Home() {
     element.scrollIntoView({ behavior: "smooth", block: "start" });
   };
 
+  const changeProjectImage = (slug, direction) => {
+    const project = projects.find((item) => item.slug === slug);
+    if (!project?.images?.length) return;
+
+    setActiveImageIndex((prev) => {
+      const currentIndex = prev[slug] ?? 0;
+      const totalImages = project.images.length;
+
+      return {
+        ...prev,
+        [slug]: (currentIndex + direction + totalImages) % totalImages,
+      };
+    });
+  };
+
   const projects = [
     {
       title: "Drone Swarm Simulation",
       slug: "simulation",
       description: "In collaboration with a team of students I developed a drone swarm simulation for the ICUAS student UAV competition. My role included creating ROS2 scripts to perform specific activties in the environment including building scans and platform landing. Our final solution made use of OSF flocking algorithms and earned us a spot to compete at the conference in person in Greece.",
-      image: `${basePath}images/ICUAS.png`,
+      images: [
+        `${basePath}images/ICUAS.png`,
+        `${basePath}images/sim1.png`,
+        `${basePath}images/CF.jpeg`,
+      ],
       skills: ["Software"]
     },
     {
       title: "Autonomous Mobile Robot",
       slug: "mobile-robot",
       description: "Developed Autonomy and control software for a rover for MREN 203 coursework. The rover was developed for a simulated mars mission, the task, to pickup soil samples from the martian surface. The solution I developed is a semi-autonomous rover that used NAV2 and SLAM to plan a path to a specified point using a pre constructed map. The onboard sensors included a RPLidar, wheel encoders and an IMU. Autonomy and low level control were bridged using ROS2 running on a Raspberry PI.",
-      image: `${basePath}images/203.jpeg`,
+      images: [
+        `${basePath}images/203.jpeg`,
+      ],
       skills: ["Electronics","Software"],
     },
     {
       title: "Turbo - Fixed Wing UAV",
       slug: "sub-system",
       description: "Researched and integrated avionics and propulsion systems for a fixed wing UAV developed for the AIAA student competition. As manager of the systems team, I also lead all testing efforts from sub-system tests to full flight performance reviews. My work required me to use tools such as OnShape for mount design and KiCAD for PDB design. In my role I developed a greater understanding for aircraft electronics, testing methodologies and leadership. ",
-      image: `${basePath}images/Turbo.jpg`,
+      images: [
+        `${basePath}images/Turbo.jpg`,
+        `${basePath}images/Test_Stand.jpeg`,
+        `${basePath}images/Radio_mount.jpeg`,
+        `${basePath}images/FlightTest.png`,
+        `${basePath}images/image.png`,
+      ],
       skills: ["Electronics","Mechanical"],
     },
     {
       title: "Custom Li-ion Batteries",
       slug: "custom-batteries",
       description: "In collaboration with another student, I designed and developed the power systems for a fixed wing UAV and heavy lift quadcopter. The manufacturing process for the 12S batteries involved spot welding, soldering and VERY careful handling.",
-      image: `${basePath}images/bat_2.jpeg`,
+      images: [
+        `${basePath}images/bat_2.jpeg`,
+        `${basePath}images/bat_1.png`,
+        `${basePath}images/bat_3.jpeg`,
+      ],
       skills: ["Manufacturing","Power Systems"],
     },
     {
       title: "Dimensional Change Monitor",
       slug: "dimensional-change-monitor",
       description: "Low-cost strain monitoring system developed for the Ingenium museum in Ottawa in an effort to optimize HVAC usage. Hardware used included a 24 bit ADC, strain guages in wheatstone bridge conifguration and an ESP32. Everything was programmed in C++ and automated alerts were sent to museum coordinaters for extreme strain values. ",
-      image: `${basePath}images/strain_2.png`,
+      images: [
+        `${basePath}images/strain_2.png`,
+        `${basePath}images/strain_1.png`,
+        `${basePath}images/strain_3.png`,
+      ],
       skills: ["Electronics", "Software"],
     },
   ];
@@ -83,7 +130,7 @@ export default function Home() {
             >
               <div className="overflow-hidden bg-transparent p-1.5">
                 <img
-                  src={`${basePath}images/Headshot.png`}
+                  src={`${basePath}images/Headshot_better.jpg`}
                   alt="Portrait placeholder"
                   className="h-[420px] w-full rounded-none object-cover md:h-[520px]"
                 />
@@ -100,7 +147,7 @@ export default function Home() {
                 Purujit Kantiya
               </h1>
               <p className="mt-6 max-w-xl text-lg leading-8 text-zinc-300">
-                I’m a third year mechatronics engineering student at Queen's University in Kingston. I have 2.5 years of experience working in professional environments, design teams and academic projects.
+                I’m a third year mechatronics engineering student at Queen's University in Kingston. I have two years of experience working in professional environments, design teams and academic projects.
               </p>
 
               <div className="mt-8 flex flex-wrap gap-3">
@@ -133,32 +180,72 @@ export default function Home() {
           </div>
 
           <div className="grid gap-5 md:grid-cols-2 xl:grid-cols-3">
-            {projects.map((p) => (
-              <Card key={p.slug} className="group overflow-hidden border-white/10 bg-[#111317]/90 transition hover:-translate-y-1 hover:border-white/20 hover:bg-[#15181d]">
-                <div className="overflow-hidden border-b border-white/10 bg-[#0c0d10]">
-                  <img
-                    src={p.image}
-                    alt={p.title}
-                    className="h-64 w-full object-cover transition duration-500 group-hover:scale-[1.03]"
-                  />
-                </div>
+            {projects.map((p) => {
+              const currentImageIndex = activeImageIndex[p.slug] ?? 0;
+              const currentImage = p.images?.[currentImageIndex] ?? p.image;
+              const showGalleryControls = (p.images?.length ?? 0) > 1;
 
-                <CardContent className="flex h-full flex-col p-6">
-                  <div className="mb-5 flex flex-wrap items-start justify-between gap-2">
-                    <div className="flex flex-wrap gap-2">
-                      {p.skills?.map((skill, idx) => (
-                        <span key={idx} className="rounded-full border border-white/10 bg-white/5 px-2.5 py-1 text-[10px] uppercase tracking-[0.2em] text-zinc-400">{skill}</span>
-                      ))}
-                    </div>
-                    <span className="text-xs text-zinc-500">0{projects.indexOf(p) + 1}</span>
+              return (
+                <Card key={p.slug} className="project-card group overflow-hidden border-white/10 bg-[#111317]/90 transition hover:-translate-y-1 hover:border-white/20 hover:bg-[#15181d]">
+                  <div className="project-gallery overflow-hidden border-b border-white/10 bg-[#0c0d10]">
+                    <img
+                      src={currentImage}
+                      alt={`${p.title} preview ${currentImageIndex + 1}`}
+                      className="project-gallery-image"
+                    />
+
+                    {showGalleryControls && (
+                      <>
+                        <button
+                          type="button"
+                          aria-label={`Previous image for ${p.title}`}
+                          onClick={() => changeProjectImage(p.slug, -1)}
+                          className="project-gallery-button left-3"
+                        >
+                          <span aria-hidden="true">←</span>
+                        </button>
+                        <button
+                          type="button"
+                          aria-label={`Next image for ${p.title}`}
+                          onClick={() => changeProjectImage(p.slug, 1)}
+                          className="project-gallery-button right-3"
+                        >
+                          <span aria-hidden="true">→</span>
+                        </button>
+                      </>
+                    )}
+
+                    {showGalleryControls && (
+                      <div className="project-gallery-dots">
+                        {p.images.map((_, index) => (
+                          <button
+                            key={`${p.slug}-dot-${index}`}
+                            type="button"
+                            aria-label={`View image ${index + 1} for ${p.title}`}
+                            onClick={() => setActiveImageIndex((prev) => ({ ...prev, [p.slug]: index }))}
+                            className={`project-gallery-dot ${currentImageIndex === index ? "active" : ""}`}
+                          />
+                        ))}
+                      </div>
+                    )}
                   </div>
 
-                  <h3 className="text-xl font-medium text-white">{p.title}</h3>
-                  <p className="mt-3 flex-grow text-sm leading-7 text-zinc-300">{p.description}</p>
+                  <CardContent className="flex h-full flex-col p-6">
+                    <div className="mb-5 flex flex-wrap items-start justify-between gap-2">
+                      <div className="flex flex-wrap gap-2">
+                        {p.skills?.map((skill, idx) => (
+                          <span key={idx} className="rounded-full border border-white/10 bg-white/5 px-2.5 py-1 text-[10px] uppercase tracking-[0.2em] text-zinc-400">{skill}</span>
+                        ))}
+                      </div>
+                      <span className="text-xs text-zinc-500">0{projects.indexOf(p) + 1}</span>
+                    </div>
 
-                </CardContent>
-              </Card>
-            ))}
+                    <h3 className="text-xl font-medium text-white">{p.title}</h3>
+                    <p className="mt-3 flex-grow text-sm leading-7 text-zinc-300">{p.description}</p>
+                  </CardContent>
+                </Card>
+              );
+            })}
           </div>
         </section>
 
